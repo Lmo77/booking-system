@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Book an Appointment — Nunnas ESL</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --navy:#2d3561;--navy2:#3d4878;
+  --teal:#00cec9;--teal2:#00b5b0;--tealp:#e0fafa;
+  --green:#00b894;--greenp:#e6faf5;--greend:#007a63;
+  --coral:#e17055;--coralp:#fff0ed;--corald:#a84f20;
+  --amber:#f9a825;--amberp:#fff8e6;
+  --purple:#a29bfe;--purplep:#eeeeff;--purpled:#6c5ce7;
+  --text:#2d2d2d;--muted:#6b7280;
+  --border:#e5e7f0;--bg:#f5f6ff;--rad:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 50%,#4a5490 100%);padding:2.5rem 1.25rem 5rem;position:relative;overflow:hidden;text-align:center}
+.hc1{position:absolute;width:300px;height:300px;border-radius:50%;background:var(--teal);opacity:.12;filter:blur(60px);top:-80px;left:-60px}
+.hc2{position:absolute;width:250px;height:250px;border-radius:50%;background:var(--purple);opacity:.15;filter:blur(60px);bottom:-60px;right:-40px}
+.logo-badge{display:inline-block;background:white;border-radius:12px;padding:8px 20px;font-family:'Lora',serif;font-weight:700;color:var(--navy);font-size:1rem;margin-bottom:1rem;position:relative;z-index:2}
+.hero h1{font-family:'Lora',serif;font-size:2.2rem;font-weight:700;color:white;position:relative;z-index:2;line-height:1.2}
+.hero h1 em{color:var(--teal);font-style:italic}
+.hero p{color:rgba(255,255,255,.8);margin-top:.5rem;font-size:.95rem;position:relative;z-index:2}
+
+.wrap{max-width:760px;margin:-2.5rem auto 0;padding:0 1.25rem 4rem;position:relative;z-index:10}
+
+/* ── PANELS ── */
+.panel{background:white;border-radius:var(--rad);border:2px solid var(--border);box-shadow:0 4px 24px rgba(45,53,97,.10);margin-bottom:1.25rem;overflow:hidden}
+.phdr{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;cursor:pointer;user-select:none}
+.phdr h2{font-size:1rem;font-weight:800;color:var(--navy)}
+.ti{font-size:1.2rem;color:var(--muted);transition:transform .2s;display:inline-block}
+.pbody{display:none;padding:1.25rem 1.5rem;border-top:2px solid var(--border)}
+.open .ti{transform:rotate(180deg)}
+.pbody.open{display:block}
+
+/* ── TEACHER SETUP (dark) ── */
+.tpanel{background:#1e2340;border-radius:var(--rad);border:2px solid #3d4878;box-shadow:0 4px 24px rgba(0,0,0,.3);margin-bottom:1.25rem;overflow:hidden}
+.tphdr{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;cursor:pointer;user-select:none}
+.tphdr h2{font-size:1rem;font-weight:800;color:white}
+.tti{font-size:1.2rem;color:rgba(255,255,255,.4);transition:transform .2s;display:inline-block}
+.tpbody{display:none;padding:1.25rem 1.5rem;border-top:2px solid #3d4878}
+.tpbody.open{display:block}
+.topen .tti{transform:rotate(180deg)}
+
+.sbox{background:#161930;border-radius:10px;padding:1.1rem;margin-bottom:1rem}
+.sbox-lbl{color:var(--teal);font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem}
+.url-row{display:flex;gap:.5rem}
+.url-row input[type=text]{flex:1;padding:10px 14px;border-radius:8px;border:2px solid #3d4878;background:#2d3561;color:white;font-family:'Nunito',sans-serif;font-size:.88rem;outline:none}
+.url-row input[type=text]:focus{border-color:var(--teal)}
+.url-row input[type=text]::placeholder{color:rgba(255,255,255,.3)}
+.tbtn{padding:10px 18px;border-radius:8px;border:none;background:var(--teal);color:#1e2340;font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;font-size:.85rem;white-space:nowrap;transition:background .15s}
+.tbtn:hover{background:var(--teal2)}
+.sstat{font-size:.82rem;margin-top:.5rem;color:rgba(255,255,255,.4)}
+.sstat.ok{color:var(--teal)}.sstat.err{color:var(--coral)}
+
+/* steps */
+.tsteps{margin-bottom:1rem}
+.tstep{display:flex;gap:.6rem;align-items:flex-start;margin-bottom:.5rem}
+.tsn{width:22px;height:22px;border-radius:50%;background:#3d4878;color:var(--teal);font-weight:900;font-size:.72rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.tst{font-size:.82rem;color:rgba(255,255,255,.65);line-height:1.5}
+code{background:rgba(255,255,255,.1);padding:1px 6px;border-radius:4px;font-size:.78rem;color:var(--teal);font-weight:700}
+
+/* teacher chips preview */
+.t-preview{margin:1rem 0;display:none}
+.t-preview-lbl{color:var(--teal);font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.6rem}
+.t-cards{display:flex;flex-wrap:wrap;gap:.6rem}
+.t-chip{background:#2d3561;border:1px solid #3d4878;border-radius:10px;padding:.5rem .9rem;display:flex;align-items:center;gap:.6rem}
+.t-chip img,.t-av{width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid #3d4878}
+.t-av{background:var(--navy2);color:var(--teal);font-family:'Lora',serif;font-weight:700;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+.t-chip-name{color:white;font-weight:800;font-size:.82rem}
+.t-chip-subj{color:rgba(255,255,255,.45);font-size:.72rem}
+
+/* generate */
+.gen-wrap{margin-top:1rem}
+.gen-lbl{color:var(--teal);font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem}
+.btn-gen{display:inline-block;padding:10px 22px;border-radius:8px;border:none;background:var(--teal);color:#1e2340;font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;font-size:.88rem;transition:background .15s;margin-bottom:.75rem}
+.btn-gen:hover{background:var(--teal2)}
+.gen-area{width:100%;padding:10px;border-radius:8px;border:2px solid #3d4878;background:#2d3561;color:white;font-family:'Nunito',sans-serif;font-size:.78rem;resize:none}
+.copy-btn{margin-top:.4rem;padding:7px 16px;border-radius:8px;border:none;background:var(--green);color:white;font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;font-size:.8rem;transition:background .15s;display:none}
+.copy-btn:hover{background:var(--greend)}
+.copy-ok{color:var(--teal);font-size:.78rem;margin-top:.3rem;display:none;font-weight:700}
+
+/* ── STUDENT VIEW ── */
+.card{background:white;border-radius:var(--rad);border:2px solid var(--border);box-shadow:0 4px 24px rgba(45,53,97,.10);padding:1.5rem;margin-bottom:1.25rem}
+.card-title{font-family:'Lora',serif;font-size:1.15rem;font-weight:700;color:var(--navy);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.step-label{font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--teal2);margin-bottom:.4rem}
+
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:.25rem}
+.how-item{background:var(--bg);border-radius:12px;border:2px solid var(--border);padding:1rem;text-align:center}
+.how-icon{font-size:1.5rem;margin-bottom:.35rem}
+.how-item h3{font-size:.82rem;font-weight:800;color:var(--navy);margin-bottom:.15rem}
+.how-item p{font-size:.73rem;color:var(--muted);line-height:1.5}
+
+.teacher-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.75rem}
+.teacher-card{border:2px solid var(--border);border-radius:14px;padding:1.1rem;text-align:center;cursor:pointer;transition:all .2s;background:white}
+.teacher-card:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,206,201,.15)}
+.teacher-card.selected{border-color:var(--teal);background:var(--tealp);box-shadow:0 0 0 3px rgba(0,206,201,.2)}
+.teacher-card img,.tc-av{width:56px;height:56px;border-radius:50%;object-fit:cover;margin:0 auto .6rem;display:block;border:2px solid var(--border)}
+.tc-av{background:var(--navy);color:var(--teal);font-family:'Lora',serif;font-weight:700;font-size:1.3rem;display:flex;align-items:center;justify-content:center}
+.tc-name{font-weight:800;font-size:.9rem;color:var(--navy)}
+.tc-subj{font-size:.75rem;color:var(--muted);margin-top:.15rem}
+
+.book-panel{background:linear-gradient(135deg,#1e2340,#2d3561);border-radius:14px;padding:1.5rem;text-align:center}
+.book-panel p{color:rgba(255,255,255,.75);font-size:.9rem;margin-bottom:1.25rem;line-height:1.7}
+.book-panel strong{color:white}
+.btn-cal{display:inline-flex;align-items:center;gap:.6rem;padding:13px 28px;background:var(--teal);color:#1e2340;border:none;border-radius:30px;font-family:'Lora',serif;font-size:1rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;box-shadow:0 4px 15px rgba(0,206,201,.3)}
+.btn-cal:hover{background:var(--teal2);transform:translateY(-2px)}
+.divider{display:flex;align-items:center;gap:.75rem;margin:1.1rem 0;color:rgba(255,255,255,.25);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1)}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
+.chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:4px 13px;font-size:.75rem;color:rgba(255,255,255,.65);font-weight:700}
+
+.no-data{text-align:center;padding:2.5rem 1rem}
+.no-data .icon{font-size:2.5rem;margin-bottom:.75rem}
+.no-data h2{font-family:'Lora',serif;color:var(--navy);margin-bottom:.4rem}
+.no-data p{color:var(--muted);font-size:.88rem;line-height:1.6}
+
+.hidden{display:none!important}
+@media(max-width:480px){.hero h1{font-size:1.7rem}.how-grid{grid-template-columns:1fr}.url-row{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hc1"></div><div class="hc2"></div>
+  <div class="logo-badge">🇬🇧 Nunnas ESL</div>
+  <h1>Book an <em>Appointment</em></h1>
+  <p id="heroSub">Choose your teacher and pick a time that works for you</p>
+</div>
+
+<div class="wrap" id="mainWrap"></div>
+
+<script>
+var _teachers = [];
+
+function getParam(k){ return new URLSearchParams(window.location.search).get(k); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function ini(n){ return (n||'?')[0].toUpperCase(); }
+
+// Auto-converts any Google Drive URL to a direct image URL
+function fixPhoto(url){
+  if(!url) return '';
+  // Already a direct link
+  if(url.indexOf('uc?export=view') > -1) return url;
+  // Standard sharing link: /file/d/ID/view
+  var m = url.match(/\/file\/d\/([^\/\?]+)/);
+  if(m) return 'https://drive.google.com/uc?export=view&id=' + m[1];
+  // Open link: id=ID
+  var m2 = url.match(/[?&]id=([^&]+)/);
+  if(m2) return 'https://drive.google.com/uc?export=view&id=' + m2[1];
+  // Return as-is for non-Drive URLs (e.g. direct image links)
+  return url;
+}
+
+// ─────────────────────────────────────────────
+// INIT — teacher mode if ?mode=teacher, else student
+// ─────────────────────────────────────────────
+function init(){
+  if(getParam('mode')==='teacher' || !getParam('teachers')) renderTeacher();
+  else renderStudent();
+}
+
+// ─────────────────────────────────────────────
+// TEACHER / ADMIN VIEW
+// ─────────────────────────────────────────────
+function renderTeacher(){
+  document.getElementById('heroSub').textContent = 'Admin Panel — manage teachers & generate student link';
+  document.getElementById('mainWrap').innerHTML = `
+    <div class="tpanel topen" id="tPanel">
+      <div class="tphdr" onclick="togTP()">
+        <h2>⚙️ Teacher Setup</h2><span class="tti" id="tTi">▾</span>
+      </div>
+      <div class="tpbody open" id="tBody">
+        <p style="font-size:.85rem;color:rgba(255,255,255,.5);margin-bottom:1rem">Paste your Google Sheets CSV URL below, click Load, then generate the student booking link.</p>
+
+        <div class="tsteps">
+          <div class="tstep"><div class="tsn">1</div><div class="tst">In Google Sheets create columns: <code>name</code> <code>subject</code> <code>photo</code> <code>bookingUrl</code></div></div>
+          <div class="tstep"><div class="tsn">2</div><div class="tst">Go to <strong style="color:white">File → Share → Publish to web</strong> → select <code>CSV</code> → click Publish → copy the URL</div></div>
+          <div class="tstep"><div class="tsn">3</div><div class="tst">Paste the URL below and click <strong style="color:white">Load</strong></div></div>
+          <div class="tstep"><div class="tsn">4</div><div class="tst">Check the preview then click <strong style="color:white">Generate Student Link</strong></div></div>
+        </div>
+
+        <div class="sbox">
+          <div class="sbox-lbl">Teachers CSV URL</div>
+          <div class="url-row">
+            <input type="text" id="csvUrl" placeholder="Paste published Google Sheets CSV URL here…"/>
+            <button class="tbtn" onclick="loadCSV()">Load</button>
+          </div>
+          <div class="sstat" id="csvStat">No data loaded yet</div>
+        </div>
+
+        <div class="t-preview" id="tPreview">
+          <div class="t-preview-lbl">👥 Loaded Teachers</div>
+          <div class="t-cards" id="tCards"></div>
+        </div>
+
+        <div class="gen-wrap">
+          <div class="gen-lbl">🔗 Generate Student Link</div>
+          <button class="btn-gen" onclick="generateLink()">Generate Link</button>
+          <textarea class="gen-area" id="genOut" rows="3" readonly placeholder="Your student link will appear here…"></textarea>
+          <button class="copy-btn" id="copyBtn" onclick="copyLink()">Copy Link</button>
+          <div class="copy-ok" id="copyOk">✅ Copied to clipboard!</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function togTP(){
+  var p=document.getElementById('tPanel'),b=document.getElementById('tBody'),t=document.getElementById('tTi');
+  var open=b.classList.toggle('open');
+  if(open){p.classList.add('topen');t.style.transform='rotate(180deg)';}
+  else{p.classList.remove('topen');t.style.transform='';}
+}
+
+// ─── LOAD CSV FROM URL ────────────────────────
+function loadCSV(){
+  var url = document.getElementById('csvUrl').value.trim();
+  var stat = document.getElementById('csvStat');
+  if(!url){ stat.textContent='Please paste a URL first.'; stat.className='sstat err'; return; }
+  stat.textContent='Loading…'; stat.className='sstat';
+  fetch(url)
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.text(); })
+    .then(function(text){ parseCSV(text); })
+    .catch(function(){ stat.textContent='❌ Could not load. Check the URL and make sure the sheet is published as CSV.'; stat.className='sstat err'; });
+}
+
+function parseCSV(text){
+  var stat = document.getElementById('csvStat');
+  var lines = text.trim().split(/\r?\n/);
+  if(lines.length < 2){ stat.textContent='❌ No data rows found.'; stat.className='sstat err'; return; }
+  var headers = splitLine(lines[0]).map(function(h){ return h.toLowerCase().trim(); });
+  var iN=headers.indexOf('name'), iS=headers.indexOf('subject'), iP=headers.indexOf('photo'), iU=headers.indexOf('bookingurl');
+  if(iN<0||iU<0){ stat.textContent='❌ Need at least name and bookingUrl columns.'; stat.className='sstat err'; return; }
+  var parsed=[];
+  for(var i=1;i<lines.length;i++){
+    var c=splitLine(lines[i]); var n=(c[iN]||'').trim(); if(!n) continue;
+    parsed.push({name:n, subject:(iS>=0?(c[iS]||''):'').trim(), photo:(iP>=0?(c[iP]||''):'').trim(), bookingUrl:(iU>=0?(c[iU]||''):'').trim()});
+  }
+  if(!parsed.length){ stat.textContent='❌ No valid teacher rows found.'; stat.className='sstat err'; return; }
+  _teachers=parsed;
+  stat.textContent='✅ '+parsed.length+' teacher'+(parsed.length>1?'s':'')+' loaded!'; stat.className='sstat ok';
+  renderChips();
+}
+
+function splitLine(line){
+  var res=[],cur='',inQ=false;
+  for(var i=0;i<line.length;i++){
+    var c=line[i];
+    if(c==='"'){inQ=!inQ;} else if(c===','&&!inQ){res.push(cur);cur='';} else{cur+=c;}
+  }
+  res.push(cur); return res;
+}
+
+function renderChips(){
+  var el=document.getElementById('tPreview'); el.style.display='block';
+  document.getElementById('tCards').innerHTML=_teachers.map(function(t){
+    var photo=fixPhoto(t.photo);
+    var av=photo
+      ?'<img src="'+esc(photo)+'" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">'
+        +'<div class="t-av" style="display:none">'+ini(t.name)+'</div>'
+      :'<div class="t-av">'+ini(t.name)+'</div>';
+    return '<div class="t-chip">'+av+'<div><div class="t-chip-name">'+esc(t.name)+'</div><div class="t-chip-subj">'+esc(t.subject||'')+'</div></div></div>';
+  }).join('');
+}
+
+function generateLink(){
+  if(!_teachers.length){ alert('Please load your CSV first!'); return; }
+  var data=btoa(unescape(encodeURIComponent(JSON.stringify(_teachers))));
+  var url=window.location.href.split('?')[0]+'?teachers='+data;
+  var ta=document.getElementById('genOut'); ta.value=url;
+  var cb=document.getElementById('copyBtn'); cb.style.display='inline-block';
+  ta.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function copyLink(){
+  var ta=document.getElementById('genOut'); ta.select(); ta.setSelectionRange(0,99999);
+  navigator.clipboard.writeText(ta.value).then(function(){
+    var el=document.getElementById('copyOk'); el.style.display='block';
+    setTimeout(function(){el.style.display='none';},2500);
+  }).catch(function(){document.execCommand('copy');});
+}
+
+// ─────────────────────────────────────────────
+// STUDENT VIEW
+// ─────────────────────────────────────────────
+function renderStudent(){
+  var teachers=[];
+  try{ var raw=getParam('teachers'); if(raw) teachers=JSON.parse(decodeURIComponent(escape(atob(raw)))); } catch(e){}
+  var wrap=document.getElementById('mainWrap');
+
+  if(!teachers.length){
+    wrap.innerHTML='<div class="card"><div class="no-data"><div class="icon">🔗</div><h2>No booking link found</h2><p>Please use the link provided by your teacher.</p></div></div>';
+    return;
+  }
+
+  wrap.innerHTML=`
+    <div class="card">
+      <div class="card-title"><span>✨</span> How it works</div>
+      <div class="how-grid">
+        <div class="how-item"><div class="how-icon">👤</div><h3>Choose a teacher</h3><p>Select who you'd like to meet</p></div>
+        <div class="how-item"><div class="how-icon">📅</div><h3>Pick a slot</h3><p>Only real available times shown</p></div>
+        <div class="how-item"><div class="how-icon">✉️</div><h3>Get confirmed</h3><p>Calendar invite sent to your email</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="step-label">Step 1</div>
+      <div class="card-title"><span>👤</span> Who would you like to see?</div>
+      <div class="teacher-grid" id="teacherGrid"></div>
+    </div>
+    <div class="card hidden" id="bookCard">
+      <div class="step-label">Step 2</div>
+      <div class="card-title"><span>📅</span> <span id="bookHeading">Book your session</span></div>
+      <div class="book-panel">
+        <p id="bookDesc"></p>
+        <a id="bookLink" href="#" target="_blank" class="btn-cal">📅 &nbsp;Open Booking Calendar</a>
+        <div class="divider">what to expect</div>
+        <div class="chips">
+          <div class="chip">✅ Only available slots</div>
+          <div class="chip">⚡ Updates in real time</div>
+          <div class="chip">✉️ Invite by email</div>
+        </div>
+      </div>
+    </div>`;
+
+  var grid=document.getElementById('teacherGrid');
+  teachers.forEach(function(t){
+    var photo=fixPhoto(t.photo);
+    var av=photo
+      ?'<img src="'+esc(photo)+'" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">'
+        +'<div class="tc-av" style="display:none">'+ini(t.name)+'</div>'
+      :'<div class="tc-av">'+ini(t.name)+'</div>';
+    var card=document.createElement('div');
+    card.className='teacher-card';
+    card.innerHTML=av+'<div class="tc-name">'+esc(t.name)+'</div><div class="tc-subj">'+esc(t.subject||'')+'</div>';
+    card.onclick=(function(teacher){return function(){selectTeacher(teacher,card);};})(t);
+    grid.appendChild(card);
+  });
+}
+
+function selectTeacher(t,card){
+  document.querySelectorAll('.teacher-card').forEach(function(c){c.classList.remove('selected');});
+  card.classList.add('selected');
+  document.getElementById('bookHeading').textContent='Book with '+t.name;
+  document.getElementById('bookDesc').innerHTML='You\'re booking a <strong>'+(t.subject||'session')+'</strong> session with <strong>'+esc(t.name)+'</strong>.<br/>Click below — only available slots are shown.';
+  document.getElementById('bookLink').href=t.bookingUrl||'#';
+  var bc=document.getElementById('bookCard'); bc.classList.remove('hidden');
+  setTimeout(function(){bc.scrollIntoView({behavior:'smooth',block:'start'});},100);
+}
+
+init();
+</script>
+</body>
+</html>
